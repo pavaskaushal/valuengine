@@ -64,7 +64,12 @@ st.markdown("""
 @st.cache_data(ttl=3600)
 def fetch_company_data(ticker):
     try:
-        stock = yf.Ticker(ticker)
+        import requests
+        session = requests.Session()
+        session.headers.update({
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+        })
+        stock = yf.Ticker(ticker, session=session)
         info = stock.info
         financials = stock.financials
 
