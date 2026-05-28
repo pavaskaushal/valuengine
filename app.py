@@ -179,13 +179,24 @@ if load_button:
 # Assign data BEFORE using it
 data = st.session_state.company_data
 
-# Extract currency info
+if not data["success"]:
+    st.warning("Live data fetch failed. Loading Reliance Industries demo data.")
+    data = {
+        "current_price": 1352.0,
+        "shares": 6766.0,
+        "revenue": 975000.0,
+        "ebit_margin": 15.0,
+        "net_debt": 100000.0,
+        "market_cap": 1800000.0,
+        "company_name": "Reliance Industries Limited",
+        "currency": "INR",
+        "currency_symbol": "\u20b9",
+        "unit_label": "Millions (INR)",
+        "success": True
+    }
+
 currency_symbol = data.get("currency_symbol", "$")
 unit_label = data.get("unit_label", "Millions")
-
-if not data["success"]:
-    st.error("Failed to load data. Please check the ticker and try again.")
-    st.stop()
 
 st.sidebar.success("✅ " + data["company_name"])
 
